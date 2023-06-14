@@ -7,7 +7,13 @@ use Illuminate\Http\Request;
 
 class MahasiswaController extends Controller
 {
-    public function create(Request $request)
+    public function index()
+    {
+        $mahasiswa = mahasiswa::all();
+        return response()->json($mahasiswa);
+    }
+
+    public function store(Request $request)
     {
         $mahasiswa = new mahasiswa();
         $mahasiswa->nim = $request->nim;
@@ -22,11 +28,40 @@ class MahasiswaController extends Controller
         $mahasiswa->save();
         return response()->json($mahasiswa);
     }
-
-    public function read()
-    {
-        $mahasiswa = mahasiswa::all();
+    
+    public function show($nim){
+        $mahasiswa = mahasiswa::find($nim);
+        if (!$mahasiswa){
+            return response()->json(['message' => 'Mahasiswa not found'], 404);
+        }
         return response()->json($mahasiswa);
     }
+
+
+    public function update(Request $request, $nim){
+        $mahasiswa = mahasiswa::find($nim);
+        if (!$mahasiswa){
+            return response()->json(['message' => 'mahasiswa not found'], 404);
+        }
+        $mahasiswa->nama = $request->nama;
+        $mahasiswa->alamat = $request->alamat;
+        $mahasiswa->jurusan = $request->jurusan;
+        $mahasiswa->save();
+
+        return response()->json($mahasiswa);
+    }
+
+    public function destroy($nim){
+        $mahasiswa = mahasiswa::find($nim);
+        if (!$mahasiswa){
+            return response()->json(['message'=>'Mahasiswa not found'], 404);
+        }
+        $mahasiswa->delete();
+
+        return response()->json(['message'=>'Mahasiswa deleted successfully']);
+    }
+
+
+    
 }
 

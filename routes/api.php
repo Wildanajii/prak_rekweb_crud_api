@@ -17,5 +17,8 @@ use App\Http\Controllers\MahasiswaController;
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
-Route::post('/create', [ProductController::class, 'create']);
-Route::get('/read', [ProductController::class, 'read']);
+Route::get('/index', [MahasiswaController::class, 'index']);
+Route::post('/store', [MahasiswaController::class, 'store']);
+Route::get('/show', [MahasiswaController::class, 'show']);
+Route::put('/update', [MahasiswaController::class, 'update']);
+Route::delete('/destroy', [MahasiswaController::class, 'destroy']);
